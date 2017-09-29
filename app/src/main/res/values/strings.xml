@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Thesis</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_username_or_password">Username or Password is incorrect</string>
+    <string name="loading">Processing&#8230;</string>
+
+    <!--ADD NEW USER STRINGS-->
+    <string name="profile_picture">Profile Picture</string>
+    <string name="promptUsername"> Username</string>
+    <string name="prompt_password"> Password</string>
+    <string name="promptFirstname">Firstname</string>
+    <string name="promptLastname">Lastname</string>
+    <string name="title_activity_landing_page">Welcome</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_others">Others</string>
+
+    <!--MENU STRINGS-->
+    <string name="menu_account">Account</string>
+    <string name="menu_logs">Incident Logs</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_action">Action</string>
+    <string name="menu_ignore">Ignore</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_details">Details</string>
+
+</resources>
