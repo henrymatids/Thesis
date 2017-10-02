@@ -114,8 +114,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             if(!(TextUtils.isEmpty(email) && TextUtils.isEmpty(password))) {
                 //if the fields are not empty
-//                startActivity(new Intent(LoginActivity.this, LandingPageActivity.class));
-//                finish();
                 signIn(email, password);
             } else {
                 //if fields are empty. display error messages

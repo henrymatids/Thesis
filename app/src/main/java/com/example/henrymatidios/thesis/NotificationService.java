@@ -134,14 +134,14 @@ public class NotificationService extends JobService {
             mBuilder.setStyle(notifStyle);
         }
 
-//        Intent notificationIntent = new Intent(this, LogsActivity.class);
-//        notificationIntent.putExtra("EXTRA_NOTIFICATION_CLICKED", true);
-//        notificationIntent.putExtra("EXTRA_NOTIFICATION_KEY", key);
-//
-//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(contentIntent);
-//
-//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        manager.notify(1, mBuilder.build());
+        Intent notificationIntent = new Intent(this, LandingPageActivity.class);
+        notificationIntent.putExtra("EXTRA_NOTIFICATION_CLICKED", true);
+        notificationIntent.putExtra("EXTRA_NOTIFICATION_KEY", key);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(contentIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(1, mBuilder.build());
     }
 }

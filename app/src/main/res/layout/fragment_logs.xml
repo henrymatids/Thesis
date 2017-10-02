@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start">
+
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:contentDescription="@string/logs_indicator"
+            android:id="@+id/imageView"
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:paddingStart="1sp"
+            android:paddingEnd="5dp" />
+
+        <TextView
+            android:id="@+id/logs_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
+
+            <TextView
+                android:id="@+id/alert_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:background="@null"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/location_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:background="@null"
+                android:focusable="false"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/date_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:focusable="false"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/time_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:focusable="false"
+            android:textSize="15sp"
+            android:gravity="end"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+

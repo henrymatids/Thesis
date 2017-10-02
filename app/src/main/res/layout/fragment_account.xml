@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="50dp"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context="com.example.henrymatidios.thesis.LandingPageActivity">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="30dp"
+    android:paddingEnd="1dp">
+    <ImageView
+        android:contentDescription="@string/profile_picture"
+        android:id="@+id/imageView_profile_picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_menu_person_black"
+        android:paddingStart="1sp"
+        android:paddingEnd="5dp"
+        android:layout_gravity="start"/>
     <LinearLayout
-        android:id="@+id/progress_bar_view_users"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/pb_view_users"
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp"
+        android:layout_gravity="end">
+        <TextView
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/listView_view_users"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-        <ListView
-            android:id="@+id/view_users_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="HENRY S. MATIDIOS JR."/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/profile_account_type_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account type: "/>
+            <TextView
+                android:id="@+id/profile_account_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin"/>
+        </LinearLayout>
 
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:fabSize="mini"/>
+
 </LinearLayout>

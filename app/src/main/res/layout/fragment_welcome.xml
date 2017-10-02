@@ -7,12 +7,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WELCOME MESSAGE"/>
+            android:text="@string/welcome_message"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/welcome_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="Henry GWAPO"/>
+
     </LinearLayout>
 
 </FrameLayout>

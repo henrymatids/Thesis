@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.henrymatidios.thesis.Models.User;
+import com.example.henrymatidios.thesis.Models.Logs;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,28 +29,29 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class AccountFragment extends Fragment {
+public class LogsFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private DatabaseReference dbRef;
-    private static List<User> mAccountList = new ArrayList<User>();
+    private ChildEventListener childEventListener;
+    private static List<Logs> mListLogs = new ArrayList<Logs>();
     private int mColumnCount = 1;
-    private AccountFragment.OnListFragmentInteractionListener mListener;
-    private ValueEventListener valueEventListener;
+    private OnListFragmentInteractionListener mListener;
 
     private ProgressBar mPb;
     private RecyclerView recyclerView;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public AccountFragment() {
+    public LogsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static AccountFragment newInstance(int columnCount) {
-        AccountFragment fragment = new AccountFragment();
+    public static LogsFragment newInstance(int columnCount) {
+        LogsFragment fragment = new LogsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -69,21 +70,20 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_account_list, container, false);
-        populateAccountListView(view);
+        View view = inflater.inflate(R.layout.fragment_logs_list, container, false);
+        mPb = (ProgressBar) view.findViewById(R.id.progress_bar);
+        mPb.setVisibility(View.VISIBLE);
+        getLogs(view);
         // Set the adapter
         if (view instanceof FrameLayout) {
             Context context = view.getContext();
-            mPb = (ProgressBar) view.findViewById(R.id.pb_view_users);
-            mPb.setVisibility(View.VISIBLE);
             recyclerView = (RecyclerView) view.findViewById(R.id.list);
-
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyAccountRecyclerViewAdapter(mAccountList, mListener));
+            recyclerView.setAdapter(new MyLogsRecyclerViewAdapter(mListLogs, mListener));
         }
         return view;
     }
@@ -104,38 +104,96 @@ public class AccountFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        dbRef.removeEventListener(valueEventListener);
     }
 
     @SuppressWarnings("unchecked")
-    public void populateAccountListView(View view) {
+    public void getLogs(View view) {
+        mListLogs.clear();
 
-        dbRef = Utils.getDatabase(true).getReference("Accounts");
-        dbRef.keepSynced(true);
+        dbRef = Utils.getDatabase(false).getReference("Notification");
 
-        valueEventListener = dbRef.addValueEventListener(new ValueEventListener() {
+        childEventListener = dbRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                onChildAddedLogs(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                removeValueFromList(dataSnapshot);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(LogsActivity.this, "Database Error: " +databaseError.getCode() , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mAccountList.clear();
-
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    Map<String, String> mAccounts = (Map<String, String>) childSnapshot.getValue();
-
-                    if(mAccounts != null){
-                        User mUser = new User(null, mAccounts.get("type"), mAccounts.get("name"), R.drawable.ic_menu_person_black);
-                        mAccountList.add(mUser);
-                    }
-                }
-
                 mPb.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), "Network Error has Occurred", Toast.LENGTH_SHORT).show();
+
             }
         });
+    }
+
+    @SuppressWarnings("unchecked")
+    public void onChildAddedLogs(DataSnapshot dataSnapshot) {
+        Map<String, String> mLogs = (Map<String, String>) dataSnapshot.getValue();
+
+        if(mLogs != null)
+        {
+            int image;
+
+            if(mLogs.get("processed").equals("false")) {
+                image = R.mipmap.ic_redcircle;
+            } else {
+                image = R.mipmap.ic_greencircle;
+            }
+
+            Logs listLogs = new Logs(dataSnapshot.getKey());
+            listLogs.values.setDate(mLogs.get("date"));
+            listLogs.values.setLocation(mLogs.get("location"));
+            listLogs.values.setTime(mLogs.get("time"));
+            listLogs.values.setImage(image);
+            mListLogs.add(listLogs);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void removeValueFromList(DataSnapshot dataSnapshot) {
+        Map<String, String> mLogs = (Map<String, String>) dataSnapshot.getValue();
+        String key = dataSnapshot.getKey();
+
+        if(mLogs != null) {
+            int image;
+            if(mLogs.get("processed").equals("false")) {
+                image = R.mipmap.ic_redcircle;
+            } else {
+                image = R.mipmap.ic_greencircle;
+            }
+            Logs listLogs = new Logs(dataSnapshot.getKey());
+            listLogs.values.setDate(mLogs.get("date"));
+            listLogs.values.setLocation(mLogs.get("location"));
+            listLogs.values.setTime(mLogs.get("time"));
+            listLogs.values.setImage(image);
+
+            mListLogs.remove(listLogs);
+        }
     }
     /**
      * This interface must be implemented by activities that contain this
@@ -148,6 +206,6 @@ public class AccountFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(User info);
+        void onListFragmentInteraction(View view, Logs item);
     }
 }

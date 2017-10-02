@@ -38,5 +38,13 @@
     <string name="menu_ignore">Ignore</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_details">Details</string>
+    <string name="menu_home">Home</string>
+    <string name="logs_indicator">Logs</string>
+    <string name="welcome_message">WELCOME</string>
+    <string name="alert_gas_leak">Gas Leak Alert!</string>
+    <string name="account_message">Account</string>
+    <string name="action_switch">Valve Switch</string>
+    <string name="account_type_admin">Admin</string>
+    <string name="account_type_user">User</string>
 
 </resources>

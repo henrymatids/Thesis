@@ -3,27 +3,23 @@ package com.example.henrymatidios.thesis;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link WelcomeFragment.OnFragmentInteractionListener} interface
+ * {@link FabFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link WelcomeFragment#newInstance} factory method to
+ * Use the {@link FabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WelcomeFragment extends Fragment {
+public class FabFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +30,7 @@ public class WelcomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public WelcomeFragment() {
+    public FabFragment() {
         // Required empty public constructor
     }
 
@@ -44,10 +40,10 @@ public class WelcomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WelcomeFragment.
+     * @return A new instance of fragment FabFragment.
      */
-    public static WelcomeFragment newInstance(String param1, String param2) {
-        WelcomeFragment fragment = new WelcomeFragment();
+    public static FabFragment newInstance(String param1, String param2) {
+        FabFragment fragment = new FabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,22 +58,26 @@ public class WelcomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
-            TextView welcomeName = (TextView) view.findViewById(R.id.welcome_name);
-            welcomeName.setText(user.getDisplayName());
-        }
+        View view = inflater.inflate(R.layout.fragment_fab, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "I'm FABulous", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
-    public void onButtonPressed(int uri) {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -111,6 +111,6 @@ public class WelcomeFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(int position);
+        void onFragmentInteraction(Uri uri);
     }
 }
