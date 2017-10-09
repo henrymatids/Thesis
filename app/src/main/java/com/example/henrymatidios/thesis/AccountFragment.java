@@ -129,6 +129,7 @@ public class AccountFragment extends Fragment {
 
                 mPb.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -148,6 +149,6 @@ public class AccountFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(User info);
+        void onListFragmentInteraction(View view, User info);
     }
 }

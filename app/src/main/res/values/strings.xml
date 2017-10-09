@@ -46,5 +46,19 @@
     <string name="action_switch">Valve Switch</string>
     <string name="account_type_admin">Admin</string>
     <string name="account_type_user">User</string>
+    <string name="title_activity_add_new_user">AddNewUserActivity</string>
+    <string name="action_add">Add</string>
+    <string name="error_weak_password">This password is weak!</string>
+    <string name="error_user_exists">Username already exists</string>
+    <string name="choose_account_type">Choose account type</string>
+    <string name="add_new_user">Add new user</string>
+    <string name="image">Image</string>
+
+    <string-array name="account_type">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
+    <string name="title_activity_console_switch">ConsoleSwitch</string>
+    <string name="label_switch">Switch</string>
 
 </resources>

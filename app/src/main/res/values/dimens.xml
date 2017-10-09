@@ -6,7 +6,8 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="design_fab_size_mini" tools:override="true">80dp</dimen>
+    <dimen name="design_fab_size_mini" tools:override="true">60dp</dimen>
     <dimen name="design_fab_content_size" tools:override="true">48dp</dimen>
-    <dimen name="design_fab_image_size" tools:override="true">45dp</dimen>
+    <dimen name="design_fab_image_size" tools:override="true">40dp</dimen>
+    <dimen name="button_marginTop">16dp</dimen>
 </resources>

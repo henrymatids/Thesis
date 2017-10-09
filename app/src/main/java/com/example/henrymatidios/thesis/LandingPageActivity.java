@@ -86,10 +86,21 @@ public class LandingPageActivity extends BaseActivity
 
         createService();
 
-        WelcomeFragment newFragment = new WelcomeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, newFragment);
-        transaction.commit();
+//        if(getApplicationContext() instanceof NotificationService) {
+//            LogsFragment newFragment = new LogsFragment();
+//
+//            toolbarTitle.setText(R.string.logs_indicator);
+//
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragment_container, newFragment);
+//            transaction.commit();
+//        } else {
+            WelcomeFragment newFragment = new WelcomeFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_container, newFragment);
+            transaction.commit();
+//        }
+
     }
 
     @Override
@@ -118,6 +129,10 @@ public class LandingPageActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_switch) {
+            showProgressDialog();
+            Intent intent = new Intent(getApplicationContext(), ConsoleSwitch.class);
+            intent.putExtra("EXTRA_CONSOLE_NODE","main");
+            startActivity(intent);
             return true;
         }
 
@@ -249,7 +264,7 @@ public class LandingPageActivity extends BaseActivity
      */
     @Override
     public void onListFragmentInteraction(View view, Logs item) {
-        showMenu(view, item.values.getLocation());
+        showLogsPopupMenu(view, item.values.getLocation());
     }
 
     /**
@@ -267,11 +282,16 @@ public class LandingPageActivity extends BaseActivity
      * @param info
      */
     @Override
-    public void onListFragmentInteraction(User info) {
-
+    public void onListFragmentInteraction(View view, User info) {
+        showAccountPopupMenu(view, " ");
     }
 
-    public void showMenu(final View view, final String location){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(myServiceIntent);
+    }
+    public void showLogsPopupMenu(final View view, final String value){
 
         PopupMenu popup = new PopupMenu(getApplicationContext(), view);
 
@@ -284,15 +304,14 @@ public class LandingPageActivity extends BaseActivity
                     case R.id.action:
                         showProgressDialog();
                         markAsRead(view);
-//                        Intent intent = new Intent(getApplicationContext(), ConsoleSwitch.class);
-//                        intent.putExtra("EXTRA_CONSOLE_NODE",location);
-//                        startActivity(intent);
-                        Toast.makeText(LandingPageActivity.this, "Action Clicked", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ConsoleSwitch.class);
+                        intent.putExtra("EXTRA_CONSOLE_NODE",value);
+                        startActivity(intent);
                         break;
                     case R.id.ignore:
                         showProgressDialog();
                         markAsRead(view);
-                        Toast.makeText(LandingPageActivity.this, "Ignore Clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LandingPageActivity.this, "Ignored", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -330,6 +349,30 @@ public class LandingPageActivity extends BaseActivity
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 hideProgressDialog();
+            }
+        });
+    }
+
+    public void showAccountPopupMenu(View view, final String userID){
+
+        PopupMenu popup = new PopupMenu(getApplicationContext(), view);
+
+        popup.getMenuInflater().inflate(R.menu.view_users_popup_menu, popup.getMenu());
+        popup.show();
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete:
+                        Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.details:
+                        Toast.makeText(getApplicationContext(), "Details", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
         });
     }

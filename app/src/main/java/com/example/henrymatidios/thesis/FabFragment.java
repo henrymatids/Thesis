@@ -1,6 +1,7 @@
 package com.example.henrymatidios.thesis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -58,7 +59,6 @@ public class FabFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -71,7 +71,8 @@ public class FabFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "I'm FABulous", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), AddNewUserActivity.class);
+                startActivity(intent);
             }
         });
         return view;

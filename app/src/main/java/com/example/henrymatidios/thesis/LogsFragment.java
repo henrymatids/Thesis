@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.henrymatidios.thesis.Models.Logs;
 import com.google.firebase.database.ChildEventListener;
@@ -116,6 +117,7 @@ public class LogsFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 onChildAddedLogs(dataSnapshot);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -125,6 +127,7 @@ public class LogsFragment extends Fragment {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 removeValueFromList(dataSnapshot);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -133,7 +136,6 @@ public class LogsFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-//                Toast.makeText(LogsActivity.this, "Database Error: " +databaseError.getCode() , Toast.LENGTH_SHORT).show();
             }
         });
 
